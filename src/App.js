@@ -5,13 +5,14 @@ import './App.css';
 class App extends Component {
   constructor() {
     super()
-    this.state = { headlineContent: 'Init Text' }
+    this.headlineContent = 'Init Text'
+    this.state = { headlineContent: this.headlineContent }
   }
 
   setHeadlineContent(headlineContent) {
-    this.setState({
-      headlineContent: headlineContent
-    })
+    if (headlineContent === '')
+      headlineContent = <br />
+    this.setState({ headlineContent: headlineContent })
   }
 
   render() {
@@ -21,7 +22,7 @@ class App extends Component {
         <AppIntro />
 
         <Headline text={ this.state.headlineContent }/>
-        <Form callback={ this.setHeadlineContent.bind(this) }/>
+        <Form callback={ this.setHeadlineContent.bind(this) } reset={ this.setHeadlineContent.bind(this, this.headlineContent) }/>
       </div>
     );
   }
@@ -29,7 +30,7 @@ class App extends Component {
 
 const Header = () => (
   <div className="App-header">
-    <img src={logo} className="App-logo" alt="logo" />
+    <img src={ logo } className="App-logo" alt="logo" />
     <h2>Welcome to React</h2>
   </div>
 )
@@ -42,18 +43,22 @@ const AppIntro = () => (
 
 const Headline = ({ text }) => <h1>{ text }</h1>
 
-const Form = ({ callback }) => {
-  const logMe = ({ target }) => callback(target.value)
-
+const Form = ({ callback, reset }) => {
   return (
     <form>
-      <Input type='text' onChange={ logMe } />  
+      <Input type='text' onChange={ callback } /><br /><br />
+      <ResetButton onClick={ reset } />
     </form>
   )
 }
 
 const Input = ({ type, onChange }) => {
-  return <input type={ type } onChange={ onChange }/>
+  const change = ({ target }) => onChange(target.value)
+  return <input type={ type } onChange={ change }/>
+}
+
+const ResetButton = ({ onClick }) => {
+  return <button onClick={ onClick }>reset</button>
 }
 
 export default App;
