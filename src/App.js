@@ -4,15 +4,18 @@ import './App.css';
 
 class App extends Component {
   constructor() {
-    super()
-    this.headlineContent = 'Init Text'
-    this.state = { headlineContent: this.headlineContent }
+    super();
+    this.headlineContent = 'Init Text';
+    this.state = { headlineContent: this.headlineContent };
   }
 
   setHeadlineContent(headlineContent) {
-    if (headlineContent === '')
-      headlineContent = <br />
-    this.setState({ headlineContent: headlineContent })
+    alert(headlineContent);
+    if (headlineContent === '') {
+      headlineContent = <br />;
+    }
+
+    this.setState({ headlineContent });
   }
 
   render() {
@@ -21,8 +24,8 @@ class App extends Component {
         <Header />
         <AppIntro />
 
-        <Headline text={ this.state.headlineContent }/>
-        <Form callback={ this.setHeadlineContent.bind(this) } reset={ this.setHeadlineContent.bind(this, this.headlineContent) }/>
+        <Headline text={ this.state.headlineContent } />
+        <Form callback={ this.setHeadlineContent.bind(this) } reset={ this.setHeadlineContent.bind(this, this.headlineContent) } />
       </div>
     );
   }
@@ -33,32 +36,32 @@ const Header = () => (
     <img src={ logo } className="App-logo" alt="logo" />
     <h2>Welcome to React</h2>
   </div>
-)
+);
 
 const AppIntro = () => (
   <p className="App-intro">
     To get started, edit <code>src/App.js</code> and save to reload.
   </p>
-)
+);
 
-const Headline = ({ text }) => <h1>{ text }</h1>
+const Headline = ({ text }) => <h1>{text}</h1>;
 
 const Form = ({ callback, reset }) => {
   return (
-    <form>
-      <Input type='text' onChange={ callback } /><br /><br />
+    <form action="">
+      <Input type="text" onChange={ callback } /><br /><br />
       <ResetButton onClick={ reset } />
     </form>
-  )
-}
+  );
+};
 
 const Input = ({ type, onChange }) => {
-  const change = ({ target }) => onChange(target.value)
-  return <input type={ type } onChange={ change }/>
-}
+  const change = ({ target }) => onChange(target.value);
+  return <input type={ type } onChange={ change } />;
+};
 
 const ResetButton = ({ onClick }) => {
-  return <button onClick={ onClick }>reset</button>
-}
+  return <button onClick={ onClick }>reset</button>;
+};
 
 export default App;
